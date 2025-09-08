@@ -1,0 +1,140 @@
+.property-listing-wrapper {
+  padding: 22px 0;
+  h1 {
+    @media (max-width: ($mobile-devices-max-width)+px) {
+      font-size: 1.5rem;
+    }
+  }
+  .testimonial-wrapper {
+    background-color: $white-color;
+    .testimonial-btn-variant {
+      margin-top: 40px;
+    }
+  }
+}
+
+.flight-tabs-ul {
+  text-align: center;
+  padding: 30px 40px;
+  li {
+    position: relative;
+    display: inline-block;
+    margin-right: 60px;
+    vertical-align: top;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 73px;
+      width: 143px;
+      height: 1px;
+      background-color: $theme-border-color;
+      top: 12px;
+    }
+    &:last-child {
+      margin-right: 0;
+      &::before {
+        display: none;
+      }
+    }
+    .btn.btn-nothing {
+      width: 115px;
+      white-space: break-spaces;
+      span {
+        display: block;
+        &.flight-tabs-icon {
+          margin-bottom: 5px;
+          height: 24px;
+          svg {
+            fill: $theme-font-primary-color;
+          }
+        }
+        &.flight-tabs-text {
+          line-height: 18px;
+        }
+      }
+    }
+    &.active {
+      .btn.btn-nothing {
+        span {
+          &.flight-tabs-icon {
+            svg {
+              fill: $theme-primary-color;
+            }
+          }
+          &.flight-tabs-text {
+            color: $theme-primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.medium-padding {
+  padding-bottom: 120px;
+}
+
+.large-padding {
+  padding-bottom: 200px;
+}
+
+.list-step1 {
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-control {
+    height: 44px;
+    &.textarea {
+      height: auto;
+    }
+  }
+  .form-error {
+    display: block;
+    margin: 4px 0 0;
+  }
+  .theme-button {
+    min-width: 150px;
+  }
+  .img-box {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+  }
+  .css-1s2u09g-control,
+  .css-1pahdxg-control {
+    min-height: 150px;
+    align-items: flex-start;
+    .css-319lph-ValueContainer {
+      padding: 4px 8px;
+    }
+  }
+  .img-photo {
+    width: 100%;
+    height: 170px;
+    position: relative;
+    img {
+      object-fit: cover;
+      object-position: center;
+      border-radius: 4px;
+      width: 100%;
+      height: 100%;
+    }
+    .btn-close {
+      border: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: $white-color;
+      border-radius: 50%;
+      font-size: 24px;
+      line-height: 24px;
+      color: $theme-font-primary-color;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

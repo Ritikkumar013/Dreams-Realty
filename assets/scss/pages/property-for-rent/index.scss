@@ -1,0 +1,40 @@
+@import "@scss/components/propert-for-sale/property-links/index.scss";
+@import "@scss/components/propert-for-sale/map-view.scss";
+@import "@scss/components/propert-for-sale/pagination/index.scss";
+.menu-list {
+  margin-bottom: 24px;
+  ul {
+    li {
+      display: inline-block;
+      @media (max-width: ($mobile-devices-max-width)+px) {
+        display: block;
+      }
+      @media (min-width: $tablet-devices-min+px) {
+        &:not(:last-child) {
+          margin-right: 8px;
+        }
+      }
+      @media (min-width: ($tablet-devices-min)+px) and (max-width: $tablet-devices-max+px) {
+        &:last-child {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+.add-position-absolute {
+  @media (max-width: ($mobile-devices-max-width)+px) {
+    // position: relative;
+    width: 92%;
+  }
+  position: absolute;
+  z-index: 11;
+  background: #fff;
+}
+
+.filter-container {
+  @media (max-width: ($mobile-devices-max-width)+px) {
+    margin-top: 24rem !important;
+  }
+}
