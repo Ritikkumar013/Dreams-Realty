@@ -213,7 +213,7 @@
 //       />
 //       <Component {...pageProps} />
 
-//       {/* 🔹 Popup will now be global */}
+//       {/*  Popup will now be global */}
 //       {showPopup && <Popup1 />}
 
 //       {/* Popup after 20 second */}
@@ -299,7 +299,7 @@ export default function MyApp({ Component, pageProps }) {
         const randomPopupId = getRandomPopup();
         showPopup(randomPopupId);
         sessionStorage.setItem("initialPopupShown", "true");
-      }, 2000);
+      }, 50000);
 
       return () => clearTimeout(timer);
     }

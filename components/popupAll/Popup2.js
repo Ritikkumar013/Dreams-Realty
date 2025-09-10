@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 
 // Mock functions for demonstration
 const getValue = (obj, path, defaultValue) => {
@@ -34,30 +33,47 @@ const postCreatePropertyEnquiry = async (data) => {
   return { message: "Thank you for your interest! We will contact you soon." };
 };
 
-const Pop = () => {
+const Popup2 = ({ onClose }) => {
   const [showModal, setShowModal] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isContactLoading, setContactLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   const [request, setRequest] = useState({
     name: "",
     phone: "",
     email: "",
-    propertyType: "apartment",
+    propertyType: "2BHK",
     message: "",
   });
 
   useEffect(() => {
     setMounted(true);
+    setWindowWidth(window.innerWidth);
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
     const timer = setTimeout(() => {
       setShowModal(true);
     }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+
+  // Responsive breakpoints
+  const isMobile = windowWidth <= 640;
+  const isTablet = windowWidth > 640 && windowWidth <= 1024;
+  const isDesktop = windowWidth > 1024;
 
   const validateField = (field, value) => {
     let error = null;
@@ -168,13 +184,15 @@ const Pop = () => {
           name: "",
           phone: "",
           email: "",
-          propertyType: "apartment",
+          propertyType: "2BHK",
           message: "",
         });
         setErrors({});
         setTouched({});
         setHasSubmitted(false);
         setShowModal(false);
+        // Call onClose if provided
+        if (onClose) onClose();
       } else {
         setContactLoading(false);
         toast.error("Something went wrong. Please try again.");
@@ -188,11 +206,53 @@ const Pop = () => {
 
   const closeModal = () => {
     setShowModal(false);
+    // Call onClose if provided
+    if (onClose) onClose();
   };
 
   if (!mounted || !showModal) {
     return null;
   }
+
+  // Dynamic styles based on screen size
+  const modalStyles = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: isMobile ? "95vw" : isTablet ? "85vw" : "min(70vw, 1100px)",
+    maxWidth: isMobile ? "400px" : "none",
+    height: isMobile ? "95vh" : isTablet ? "85vh" : "min(85vh, 700px)",
+    maxHeight: "95vh",
+    backgroundColor: "white",
+    borderRadius: isMobile ? "12px" : "16px",
+    boxShadow: "0 32px 64px rgba(0, 0, 0, 0.25)",
+    zIndex: 9999,
+    overflow: "hidden",
+    animation: "slideIn 0.4s ease-out",
+    display: "flex",
+    flexDirection: isMobile ? "column" : "row",
+  };
+
+  const closeButtonStyles = {
+    position: "absolute",
+    top: isMobile ? "12px" : "16px",
+    right: isMobile ? "12px" : "16px",
+    width: isMobile ? "32px" : "36px",
+    height: isMobile ? "32px" : "36px",
+    borderRadius: "50%",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    border: "none",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "18px" : "20px",
+    color: "#666",
+    zIndex: 10000,
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+    transition: "all 0.3s ease",
+  };
 
   return (
     <>
@@ -222,62 +282,36 @@ const Pop = () => {
           backdropFilter: "blur(8px)",
           zIndex: 9998,
         }}
-      ></div>
+      />
 
       {/* Modal */}
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "min(58vw, 1200px)",
-          height: "min(78vh, 600px)",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          boxShadow: "0 32px 64px rgba(0, 0, 0, 0.25)",
-          zIndex: 9999,
-          overflow: "hidden",
-          animation: "slideIn 0.4s ease-out",
-          display: "flex",
-          flexDirection: window.innerWidth <= 768 ? "column" : "row",
-        }}
-      >
+      <div style={modalStyles}>
         {/* Close Button */}
-        <button
-          onClick={closeModal}
-          style={{
-            position: "absolute",
-            top: "15px",
-            right: "15px",
-            width: window.innerWidth <= 480 ? "30px" : "36px",
-            height: window.innerWidth <= 480 ? "30px" : "36px",
-            borderRadius: "50%",
-            backgroundColor: "rgba(255, 255, 255, 0.95)",
-            border: "none",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: window.innerWidth <= 480 ? "16px" : "20px",
-            color: "#666",
-            zIndex: 10000,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-            transition: "all 0.3s ease",
-          }}
-        >
+        <button onClick={closeModal} style={closeButtonStyles}>
           ×
         </button>
 
-        <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: window.innerWidth <= 768 ? "column" : "row" }}>
-          {/* Left Side - Enhanced Visual Section */}
+        <div 
+          style={{ 
+            display: "flex", 
+            height: "100%", 
+            width: "100%", 
+            flexDirection: isMobile ? "column" : "row" 
+          }}
+        >
+          {/* Left Side - Visual Section */}
           <div
             style={{
-              flex: window.innerWidth <= 768 ? "none" : 1,
-              height: window.innerWidth <= 768 ? "40%" : "100%",
+              flex: isMobile ? "none" : 1,
+              height: isMobile ? "35%" : "100%",
+              minHeight: isMobile ? "200px" : "auto",
               position: "relative",
-              padding: window.innerWidth <= 480 ? "15px" : window.innerWidth <= 768 ? "20px" : "30px",
+              padding: isMobile ? "16px" : isTablet ? "24px" : "32px",
               color: "white",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {/* Background Image */}
@@ -294,9 +328,9 @@ const Pop = () => {
                 backgroundRepeat: "no-repeat",
                 zIndex: -2,
               }}
-            ></div>
+            />
 
-            {/* Solid Overlay */}
+            {/* Overlay */}
             {/* <div
               style={{
                 position: "absolute",
@@ -304,248 +338,92 @@ const Pop = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: "rgba(0, 0, 0, 0.50)",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
                 zIndex: -1,
               }}
-            ></div> */}
+            /> */}
 
-            {/* Top Section - Brand & Heading */}
-            {/* <div style={{ position: "relative", zIndex: 1 }}>
+            {/* Content */}
+            {/* <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+              <h2
+                style={{
+                  fontSize: isMobile ? "20px" : isTablet ? "24px" : "28px",
+                  fontWeight: "bold",
+                  marginBottom: isMobile ? "8px" : "12px",
+                  lineHeight: "1.2",
+                }}
+              >
+                Welcome to Dreams Realty
+              </h2>
+              <p
+                style={{
+                  fontSize: isMobile ? "14px" : isTablet ? "16px" : "18px",
+                  color: "rgba(255, 255, 255, 0.9)",
+                  lineHeight: "1.5",
+                  marginBottom: isMobile ? "16px" : "24px",
+                }}
+              >
+                Find your perfect home with our expert guidance
+              </p>
+
               
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <div>
-                  <Image
-                    style={{
-                      width: window.innerWidth <= 480 ? "80px" : window.innerWidth <= 768 ? "100px" : "130px", 
-                      height: window.innerWidth <= 480 ? "43px" : window.innerWidth <= 768 ? "54px" : "70px", 
-                      objectFit: "contain"
-                    }}
-                    src="/images/logo/white-logo.png"
-                    width={window.innerWidth <= 480 ? 80 : window.innerWidth <= 768 ? 100 : 130}
-                    height={window.innerWidth <= 480 ? 43 : window.innerWidth <= 768 ? 54 : 70}
-                    alt="Dreams Realty Logo"
-                  />
-                </div>
-              </div>
-
-           
-              <div style={{ marginBottom: "20px" }}>
-                <h2
+              {!isMobile && (
+                <div
                   style={{
-                    fontSize: window.innerWidth <= 480 ? "16px" : window.innerWidth <= 768 ? "20px" : "24px",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                    lineHeight: "1.2",
-                    background: "linear-gradient(135deg, #ffffff, #f8fafc)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    fontStyle: "italic"
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "16px",
+                    flexWrap: "wrap",
                   }}
                 >
-                  Your Luxury Home Awaits
-                </h2>
-                {window.innerWidth > 768 && (
-                  <p
+                  <div
                     style={{
+                      padding: "8px 16px",
+                      backgroundColor: "rgba(255, 255, 255, 0.15)",
+                      borderRadius: "20px",
                       fontSize: "14px",
-                      color: "rgba(255, 255, 255, 0.85)",
-                      lineHeight: "1.4",
-                      fontWeight: "300",
+                      fontWeight: "500",
                     }}
                   >
-                    Discover premium villas and apartments in East Bengaluru with Dreams Realty—a new-age real estate advisory, brokerage, and investment firm trusted by IT professionals, NRIs, investors, and top developers.
-                  </p>
-                )}
-              </div>
+                    Premium Properties
+                  </div>
+                  <div
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "rgba(255, 255, 255, 0.15)",
+                      borderRadius: "20px",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Expert Support
+                  </div>
+                </div>
+              )}
             </div> */}
-
-            {/* Bottom Section - Stats & Features */}
-            <div style={{ position: "relative", zIndex: 1 }}>
-              {/* Features */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: window.innerWidth <= 480 ? "column" : window.innerWidth <= 1024 ? "column" : "row",
-                  gap: window.innerWidth <= 480 ? "6px" : "12px",
-                  marginTop: window.innerWidth <= 768 ? "20px" : "300px",
-                }}
-              >
-                {/* <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: window.innerWidth <= 480 ? "5px 6px" : "8px 12px",
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
-                    borderRadius: window.innerWidth <= 480 ? "6px" : "10px",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
-                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
-                      background: "white",
-                      borderRadius: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginRight: window.innerWidth <= 480 ? "6px" : "10px",
-                      fontSize: window.innerWidth <= 480 ? "10px" : "14px",
-                    }}
-                  >
-                    📍
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontWeight: "600",
-                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
-                        marginBottom: "1px",
-                      }}
-                    >
-                      Prime Locations
-                    </div>
-                    <div
-                      style={{
-                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
-                        marginTop: "5px",
-                        color: "rgba(255, 255, 255, 0.7)",
-                      }}
-                    >
-                      Handpicked luxury properties in Bengaluru's most sought-after neighborhoods
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: window.innerWidth <= 480 ? "5px 6px" : "8px 12px",
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
-                    borderRadius: window.innerWidth <= 480 ? "6px" : "10px",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
-                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
-                      background: "white",
-                      borderRadius: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginRight: window.innerWidth <= 480 ? "6px" : "10px",
-                      fontSize: window.innerWidth <= 480 ? "10px" : "14px",
-                    }}
-                  >
-                    🏆
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontWeight: "600",
-                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
-                        marginBottom: "1px",
-                      }}
-                    >
-                      Trusted Guidance
-                    </div>
-                    <div
-                      style={{
-                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
-                        marginTop: "5px",
-                        color: "rgba(255, 255, 255, 0.7)",
-                      }}
-                    >
-                      Transparent, end-to-end support from search to ownership
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: window.innerWidth <= 480 ? "5px 6px" : "8px 12px",
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
-                    borderRadius: window.innerWidth <= 480 ? "6px" : "10px",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
-                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
-                      background: "white",
-                      borderRadius: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginRight: window.innerWidth <= 480 ? "6px" : "10px",
-                      fontSize: window.innerWidth <= 480 ? "10px" : "14px",
-                    }}
-                  >
-                    ⚡
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontWeight: "600",
-                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
-                        marginBottom: "1px",
-                      }}
-                    >
-                      Hassle-Free Deals
-                    </div>
-                    <div
-                      style={{
-                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
-                        marginTop: "5px",
-                        color: "rgba(255, 255, 255, 0.7)",
-                      }}
-                    >
-                      Quick response, legal assistance, and smooth transactions
-                    </div>
-                  </div>
-                </div> */}
-              </div>
-            </div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="no"
+          <div
             style={{
-              width: window.innerWidth <= 768 ? "100%" : "350px",
-              flex: window.innerWidth <= 768 ? 1 : "none",
-              padding: window.innerWidth <= 480 ? "15px" : window.innerWidth <= 768 ? "20px" : "30px",
+              width: isMobile ? "100%" : isTablet ? "400px" : "450px",
+              flex: isMobile ? 1 : "none",
+              padding: isMobile ? "20px" : isTablet ? "24px" : "32px",
               backgroundColor: "white",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
-              height: window.innerWidth <= 768 ? "60%" : "100%",
+              height: isMobile ? "65%" : "100%",
               overflowY: "auto",
             }}
           >
             {/* Form Header */}
-            <div style={{ textAlign: "center", marginBottom: window.innerWidth <= 480 ? "15px" : "20px" }}>
+            <div style={{ textAlign: "center", marginBottom: isMobile ? "16px" : "24px" }}>
               <h3
                 style={{
-                  fontSize: window.innerWidth <= 480 ? "18px" : window.innerWidth <= 768 ? "20px" : "24px",
+                  fontSize: isMobile ? "20px" : "24px",
                   fontWeight: "bold",
                   color: "#1f2937",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                 }}
               >
                 Get Started
@@ -553,8 +431,8 @@ const Pop = () => {
               <p
                 style={{
                   color: "#6b7280",
-                  fontSize: window.innerWidth <= 480 ? "12px" : "14px",
-                  lineHeight: "1.4",
+                  fontSize: isMobile ? "14px" : "16px",
+                  lineHeight: "1.5",
                 }}
               >
                 Fill in your details and we'll help you find the perfect property
@@ -566,7 +444,8 @@ const Pop = () => {
               style={{ 
                 display: "flex", 
                 flexDirection: "column", 
-                gap: window.innerWidth <= 480 ? "12px" : "16px" 
+                gap: isMobile ? "16px" : "20px",
+                flex: 1,
               }}
             >
               {/* Name Field */}
@@ -574,10 +453,10 @@ const Pop = () => {
                 <label
                   style={{
                     display: "block",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "600",
                     color: "#374151",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
                   Full Name *
@@ -591,12 +470,13 @@ const Pop = () => {
                   placeholder="Enter your full name"
                   style={{
                     width: "100%",
-                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: isMobile ? "12px" : "14px",
                     border: `2px solid ${errors.name ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
-                    fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                    fontSize: isMobile ? "16px" : "14px", // 16px on mobile prevents zoom
                     boxSizing: "border-box",
                     transition: "all 0.2s ease",
+                    outline: "none",
                   }}
                 />
                 {errors.name && (
@@ -604,7 +484,7 @@ const Pop = () => {
                     style={{
                       color: "#ef4444",
                       fontSize: "12px",
-                      marginTop: "4px",
+                      marginTop: "6px",
                     }}
                   >
                     {errors.name}
@@ -617,10 +497,10 @@ const Pop = () => {
                 <label
                   style={{
                     display: "block",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "600",
                     color: "#374151",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
                   Phone Number *
@@ -634,12 +514,13 @@ const Pop = () => {
                   placeholder="+91 99999 99999"
                   style={{
                     width: "100%",
-                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: isMobile ? "12px" : "14px",
                     border: `2px solid ${errors.phone ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
-                    fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                    fontSize: isMobile ? "16px" : "14px",
                     boxSizing: "border-box",
                     transition: "all 0.2s ease",
+                    outline: "none",
                   }}
                 />
                 {errors.phone && (
@@ -647,7 +528,7 @@ const Pop = () => {
                     style={{
                       color: "#ef4444",
                       fontSize: "12px",
-                      marginTop: "4px",
+                      marginTop: "6px",
                     }}
                   >
                     {errors.phone}
@@ -660,10 +541,10 @@ const Pop = () => {
                 <label
                   style={{
                     display: "block",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "600",
                     color: "#374151",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
                   Email Address *
@@ -677,12 +558,13 @@ const Pop = () => {
                   placeholder="your.email@example.com"
                   style={{
                     width: "100%",
-                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: isMobile ? "12px" : "14px",
                     border: `2px solid ${errors.email ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
-                    fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                    fontSize: isMobile ? "16px" : "14px",
                     boxSizing: "border-box",
                     transition: "all 0.2s ease",
+                    outline: "none",
                   }}
                 />
                 {errors.email && (
@@ -690,7 +572,7 @@ const Pop = () => {
                     style={{
                       color: "#ef4444",
                       fontSize: "12px",
-                      marginTop: "4px",
+                      marginTop: "6px",
                     }}
                   >
                     {errors.email}
@@ -698,17 +580,18 @@ const Pop = () => {
                 )}
               </div>
 
+              {/* Property Type Field */}
               <div>
                 <label
                   style={{
                     display: "block",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "600",
                     color: "#374151",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
-                  Choose Appartement
+                  Choose Apartment
                 </label>
                 <select
                   name="propertyType"
@@ -716,12 +599,13 @@ const Pop = () => {
                   onChange={handleInputChange}
                   style={{
                     width: "100%",
-                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: isMobile ? "12px" : "14px",
                     border: "2px solid #e5e7eb",
                     borderRadius: "8px",
-                    fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                    fontSize: isMobile ? "16px" : "14px",
                     boxSizing: "border-box",
                     backgroundColor: "white",
+                    outline: "none",
                   }}
                 >
                   <option value="2BHK">2 BHK</option>
@@ -736,10 +620,10 @@ const Pop = () => {
                 <label
                   style={{
                     display: "block",
-                    fontSize: "13px",
+                    fontSize: "14px",
                     fontWeight: "600",
                     color: "#374151",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                   }}
                 >
                   Message (Optional)
@@ -748,17 +632,19 @@ const Pop = () => {
                   name="message"
                   value={request.message}
                   onChange={handleInputChange}
-                  rows={3}
+                  rows={isMobile ? 3 : 4}
+                  placeholder="Tell us about your requirements..."
                   style={{
                     width: "100%",
-                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: isMobile ? "12px" : "14px",
                     border: "2px solid #e5e7eb",
                     borderRadius: "8px",
-                    fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                    fontSize: isMobile ? "16px" : "14px",
                     boxSizing: "border-box",
                     transition: "all 0.2s ease",
                     resize: "vertical",
-                    minHeight: "80px",
+                    minHeight: isMobile ? "80px" : "100px",
+                    outline: "none",
                   }}
                 />
               </div>
@@ -769,19 +655,20 @@ const Pop = () => {
                 disabled={isContactLoading}
                 style={{
                   width: "100%",
-                  padding: window.innerWidth <= 480 ? "10px" : "12px",
+                  padding: isMobile ? "14px" : "16px",
                   background: isContactLoading
                     ? "#94a3b8"
                     : "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
                   color: "white",
                   border: "none",
                   borderRadius: "8px",
-                  fontSize: window.innerWidth <= 480 ? "13px" : "14px",
+                  fontSize: isMobile ? "16px" : "14px",
                   fontWeight: "600",
                   cursor: isContactLoading ? "not-allowed" : "pointer",
                   opacity: isContactLoading ? 0.7 : 1,
                   transition: "all 0.2s ease",
                   boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)",
+                  marginTop: "8px",
                 }}
               >
                 {isContactLoading ? (
@@ -790,22 +677,22 @@ const Pop = () => {
                   "Get Property Details"
                 )}
               </button>
-            </div>
 
-            {/* Privacy Note */}
-            <p
-              style={{
-                fontSize: window.innerWidth <= 480 ? "10px" : "11px",
-                color: "#6b7280",
-                textAlign: "center",
-                lineHeight: "1.4",
-                marginTop: window.innerWidth <= 480 ? "12px" : "16px",
-              }}
-            >
-              By submitting this form, you agree to our Terms of Service and
-              Privacy Policy. We'll only contact you about relevant property
-              opportunities.
-            </p>
+              {/* Privacy Note */}
+              <p
+                style={{
+                  fontSize: isMobile ? "12px" : "11px",
+                  color: "#6b7280",
+                  textAlign: "center",
+                  lineHeight: "1.4",
+                  marginTop: isMobile ? "12px" : "8px",
+                }}
+              >
+                By submitting this form, you agree to our Terms of Service and
+                Privacy Policy. We'll only contact you about relevant property
+                opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -813,4 +700,4 @@ const Pop = () => {
   );
 };
 
-export default Pop;
+export default Popup2;

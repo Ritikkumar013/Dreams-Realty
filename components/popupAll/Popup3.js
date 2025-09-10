@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
@@ -33,7 +34,7 @@ const postCreatePropertyEnquiry = async (data) => {
   return { message: "Thank you for your interest! We will contact you soon." };
 };
 
-const WelcomePopup = () => {
+const Popup3 = () => {
   const [showModal, setShowModal] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isContactLoading, setContactLoading] = useState(false);
@@ -268,26 +269,14 @@ const WelcomePopup = () => {
           ×
         </button>
 
-        <div
-          style={{
-            display: "flex",
-            height: "100%",
-            width: "100%",
-            flexDirection: window.innerWidth <= 768 ? "column" : "row",
-          }}
-        >
+        <div style={{ display: "flex", height: "100%", width: "100%", flexDirection: window.innerWidth <= 768 ? "column" : "row" }}>
           {/* Left Side - Enhanced Visual Section */}
           <div
             style={{
               flex: window.innerWidth <= 768 ? "none" : 1,
               height: window.innerWidth <= 768 ? "40%" : "100%",
               position: "relative",
-              padding:
-                window.innerWidth <= 480
-                  ? "15px"
-                  : window.innerWidth <= 768
-                  ? "20px"
-                  : "30px",
+              padding: window.innerWidth <= 480 ? "15px" : window.innerWidth <= 768 ? "20px" : "30px",
               color: "white",
             }}
           >
@@ -322,7 +311,7 @@ const WelcomePopup = () => {
 
             {/* Top Section - Brand & Heading */}
             {/* <div style={{ position: "relative", zIndex: 1 }}>
-           
+              
               <div
                 style={{
                   display: "flex",
@@ -333,49 +322,23 @@ const WelcomePopup = () => {
                 <div>
                   <Image
                     style={{
-                      width:
-                        window.innerWidth <= 480
-                          ? "80px"
-                          : window.innerWidth <= 768
-                          ? "100px"
-                          : "130px",
-                      height:
-                        window.innerWidth <= 480
-                          ? "43px"
-                          : window.innerWidth <= 768
-                          ? "54px"
-                          : "70px",
-                      objectFit: "contain",
+                      width: window.innerWidth <= 480 ? "80px" : window.innerWidth <= 768 ? "100px" : "130px", 
+                      height: window.innerWidth <= 480 ? "43px" : window.innerWidth <= 768 ? "54px" : "70px", 
+                      objectFit: "contain"
                     }}
                     src="/images/logo/white-logo.png"
-                    width={
-                      window.innerWidth <= 480
-                        ? 80
-                        : window.innerWidth <= 768
-                        ? 100
-                        : 130
-                    }
-                    height={
-                      window.innerWidth <= 480
-                        ? 43
-                        : window.innerWidth <= 768
-                        ? 54
-                        : 70
-                    }
+                    width={window.innerWidth <= 480 ? 80 : window.innerWidth <= 768 ? 100 : 130}
+                    height={window.innerWidth <= 480 ? 43 : window.innerWidth <= 768 ? 54 : 70}
                     alt="Dreams Realty Logo"
                   />
                 </div>
               </div>
 
+           
               <div style={{ marginBottom: "20px" }}>
                 <h2
                   style={{
-                    fontSize:
-                      window.innerWidth <= 480
-                        ? "16px"
-                        : window.innerWidth <= 768
-                        ? "20px"
-                        : "24px",
+                    fontSize: window.innerWidth <= 480 ? "16px" : window.innerWidth <= 768 ? "20px" : "24px",
                     fontWeight: "bold",
                     marginBottom: "10px",
                     lineHeight: "1.2",
@@ -383,7 +346,7 @@ const WelcomePopup = () => {
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     color: "transparent",
-                    fontStyle: "italic",
+                    fontStyle: "italic"
                   }}
                 >
                   Your Luxury Home Awaits
@@ -397,32 +360,24 @@ const WelcomePopup = () => {
                       fontWeight: "300",
                     }}
                   >
-                    Discover premium villas and apartments in East Bengaluru
-                    with Dreams Realty—a new-age real estate advisory,
-                    brokerage, and investment firm trusted by IT professionals,
-                    NRIs, investors, and top developers.
+                    Discover premium villas and apartments in East Bengaluru with Dreams Realty—a new-age real estate advisory, brokerage, and investment firm trusted by IT professionals, NRIs, investors, and top developers.
                   </p>
                 )}
               </div>
             </div> */}
 
             {/* Bottom Section - Stats & Features */}
-            {/* <div style={{ position: "relative", zIndex: 1 }}>
-              
+            <div style={{ position: "relative", zIndex: 1 }}>
+              {/* Features */}
               <div
                 style={{
                   display: "flex",
-                  flexDirection:
-                    window.innerWidth <= 480
-                      ? "column"
-                      : window.innerWidth <= 1024
-                      ? "column"
-                      : "row",
+                  flexDirection: window.innerWidth <= 480 ? "column" : window.innerWidth <= 1024 ? "column" : "row",
                   gap: window.innerWidth <= 480 ? "6px" : "12px",
                   marginTop: window.innerWidth <= 768 ? "20px" : "300px",
                 }}
               >
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -435,18 +390,8 @@ const WelcomePopup = () => {
                 >
                   <div
                     style={{
-                      width:
-                        window.innerWidth <= 480
-                          ? "32px"
-                          : window.innerWidth <= 768
-                          ? "40px"
-                          : "50px",
-                      height:
-                        window.innerWidth <= 480
-                          ? "22px"
-                          : window.innerWidth <= 768
-                          ? "26px"
-                          : "32px",
+                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
+                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
                       background: "white",
                       borderRadius: "8px",
                       display: "flex",
@@ -462,12 +407,7 @@ const WelcomePopup = () => {
                     <div
                       style={{
                         fontWeight: "600",
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "11px"
-                            : window.innerWidth <= 768
-                            ? "13px"
-                            : "15px",
+                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
                         marginBottom: "1px",
                       }}
                     >
@@ -475,23 +415,17 @@ const WelcomePopup = () => {
                     </div>
                     <div
                       style={{
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "9px"
-                            : window.innerWidth <= 768
-                            ? "10px"
-                            : "12px",
+                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
                         marginTop: "5px",
                         color: "rgba(255, 255, 255, 0.7)",
                       }}
                     >
-                      Handpicked luxury properties in Bengaluru's most
-                      sought-after neighborhoods
+                      Handpicked luxury properties in Bengaluru's most sought-after neighborhoods
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -504,18 +438,8 @@ const WelcomePopup = () => {
                 >
                   <div
                     style={{
-                      width:
-                        window.innerWidth <= 480
-                          ? "32px"
-                          : window.innerWidth <= 768
-                          ? "40px"
-                          : "50px",
-                      height:
-                        window.innerWidth <= 480
-                          ? "22px"
-                          : window.innerWidth <= 768
-                          ? "26px"
-                          : "32px",
+                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
+                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
                       background: "white",
                       borderRadius: "8px",
                       display: "flex",
@@ -531,12 +455,7 @@ const WelcomePopup = () => {
                     <div
                       style={{
                         fontWeight: "600",
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "11px"
-                            : window.innerWidth <= 768
-                            ? "13px"
-                            : "15px",
+                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
                         marginBottom: "1px",
                       }}
                     >
@@ -544,12 +463,7 @@ const WelcomePopup = () => {
                     </div>
                     <div
                       style={{
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "9px"
-                            : window.innerWidth <= 768
-                            ? "10px"
-                            : "12px",
+                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
                         marginTop: "5px",
                         color: "rgba(255, 255, 255, 0.7)",
                       }}
@@ -557,9 +471,9 @@ const WelcomePopup = () => {
                       Transparent, end-to-end support from search to ownership
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -572,18 +486,8 @@ const WelcomePopup = () => {
                 >
                   <div
                     style={{
-                      width:
-                        window.innerWidth <= 480
-                          ? "32px"
-                          : window.innerWidth <= 768
-                          ? "40px"
-                          : "50px",
-                      height:
-                        window.innerWidth <= 480
-                          ? "22px"
-                          : window.innerWidth <= 768
-                          ? "26px"
-                          : "32px",
+                      width: window.innerWidth <= 480 ? "32px" : window.innerWidth <= 768 ? "40px" : "50px",
+                      height: window.innerWidth <= 480 ? "22px" : window.innerWidth <= 768 ? "26px" : "32px",
                       background: "white",
                       borderRadius: "8px",
                       display: "flex",
@@ -599,12 +503,7 @@ const WelcomePopup = () => {
                     <div
                       style={{
                         fontWeight: "600",
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "11px"
-                            : window.innerWidth <= 768
-                            ? "13px"
-                            : "15px",
+                        fontSize: window.innerWidth <= 480 ? "11px" : window.innerWidth <= 768 ? "13px" : "15px",
                         marginBottom: "1px",
                       }}
                     >
@@ -612,12 +511,7 @@ const WelcomePopup = () => {
                     </div>
                     <div
                       style={{
-                        fontSize:
-                          window.innerWidth <= 480
-                            ? "9px"
-                            : window.innerWidth <= 768
-                            ? "10px"
-                            : "12px",
+                        fontSize: window.innerWidth <= 480 ? "9px" : window.innerWidth <= 768 ? "10px" : "12px",
                         marginTop: "5px",
                         color: "rgba(255, 255, 255, 0.7)",
                       }}
@@ -625,22 +519,17 @@ const WelcomePopup = () => {
                       Quick response, legal assistance, and smooth transactions
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
-            </div> */}
+            </div>
           </div>
 
           {/* Right Side - Form */}
-          <div
+          <div className="no"
             style={{
               width: window.innerWidth <= 768 ? "100%" : "350px",
               flex: window.innerWidth <= 768 ? 1 : "none",
-              padding:
-                window.innerWidth <= 480
-                  ? "15px"
-                  : window.innerWidth <= 768
-                  ? "20px"
-                  : "30px",
+              padding: window.innerWidth <= 480 ? "15px" : window.innerWidth <= 768 ? "20px" : "30px",
               backgroundColor: "white",
               display: "flex",
               flexDirection: "column",
@@ -650,20 +539,10 @@ const WelcomePopup = () => {
             }}
           >
             {/* Form Header */}
-            <div
-              style={{
-                textAlign: "center",
-                marginBottom: window.innerWidth <= 480 ? "15px" : "20px",
-              }}
-            >
+            <div style={{ textAlign: "center", marginBottom: window.innerWidth <= 480 ? "15px" : "20px" }}>
               <h3
                 style={{
-                  fontSize:
-                    window.innerWidth <= 480
-                      ? "18px"
-                      : window.innerWidth <= 768
-                      ? "20px"
-                      : "24px",
+                  fontSize: window.innerWidth <= 480 ? "18px" : window.innerWidth <= 768 ? "20px" : "24px",
                   fontWeight: "bold",
                   color: "#1f2937",
                   marginBottom: "6px",
@@ -678,17 +557,16 @@ const WelcomePopup = () => {
                   lineHeight: "1.4",
                 }}
               >
-                Fill in your details and we'll help you find the perfect
-                property
+                Fill in your details and we'll help you find the perfect property
               </p>
             </div>
 
             {/* Form Fields */}
             <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: window.innerWidth <= 480 ? "12px" : "16px",
+              style={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: window.innerWidth <= 480 ? "12px" : "16px" 
               }}
             >
               {/* Name Field */}
@@ -713,8 +591,7 @@ const WelcomePopup = () => {
                   placeholder="Enter your full name"
                   style={{
                     width: "100%",
-                    padding:
-                      window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
                     border: `2px solid ${errors.name ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
                     fontSize: window.innerWidth <= 480 ? "13px" : "14px",
@@ -757,8 +634,7 @@ const WelcomePopup = () => {
                   placeholder="+91 99999 99999"
                   style={{
                     width: "100%",
-                    padding:
-                      window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
                     border: `2px solid ${errors.phone ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
                     fontSize: window.innerWidth <= 480 ? "13px" : "14px",
@@ -801,8 +677,7 @@ const WelcomePopup = () => {
                   placeholder="your.email@example.com"
                   style={{
                     width: "100%",
-                    padding:
-                      window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
                     border: `2px solid ${errors.email ? "#ef4444" : "#e5e7eb"}`,
                     borderRadius: "8px",
                     fontSize: window.innerWidth <= 480 ? "13px" : "14px",
@@ -841,8 +716,7 @@ const WelcomePopup = () => {
                   onChange={handleInputChange}
                   style={{
                     width: "100%",
-                    padding:
-                      window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
                     border: "2px solid #e5e7eb",
                     borderRadius: "8px",
                     fontSize: window.innerWidth <= 480 ? "13px" : "14px",
@@ -877,8 +751,7 @@ const WelcomePopup = () => {
                   rows={3}
                   style={{
                     width: "100%",
-                    padding:
-                      window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
+                    padding: window.innerWidth <= 480 ? "8px 10px" : "10px 12px",
                     border: "2px solid #e5e7eb",
                     borderRadius: "8px",
                     fontSize: window.innerWidth <= 480 ? "13px" : "14px",
@@ -940,4 +813,4 @@ const WelcomePopup = () => {
   );
 };
 
-export default WelcomePopup;
+export default Popup3;
