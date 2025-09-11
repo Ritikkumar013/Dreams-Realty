@@ -299,7 +299,7 @@ export default function MyApp({ Component, pageProps }) {
         const randomPopupId = getRandomPopup();
         showPopup(randomPopupId);
         sessionStorage.setItem("initialPopupShown", "true");
-      }, 50000);
+      }, 30000);
 
       return () => clearTimeout(timer);
     }
