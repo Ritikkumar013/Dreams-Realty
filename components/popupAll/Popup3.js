@@ -288,7 +288,7 @@ const Popup3 = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundImage: `url('/popupImage.png')`,
+                backgroundImage: `url('/popupImage-min.png')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",

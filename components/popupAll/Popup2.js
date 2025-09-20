@@ -322,7 +322,7 @@ const Popup2 = ({ onClose }) => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundImage: `url('/pop.jpeg')`,
+                backgroundImage: `url('/pop-min.jpeg')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",

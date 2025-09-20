@@ -232,6 +232,7 @@
 
 
 import "../styles/Blog.css";
+import "../styles/Bslug.css";
 import "bootstrap/scss/bootstrap.scss";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lightgallery-bundle.css";
